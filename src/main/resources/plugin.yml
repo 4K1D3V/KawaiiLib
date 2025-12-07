@@ -1,0 +1,7 @@
+name: KawaiiLib
+version: '1.0'
+main: dev.oumaimaa.kawaiilib.Bootstrap
+api-version: '1.21'
+authors: [ oumaimaa ]
+softdepend:
+  - PlaceholderAPI
