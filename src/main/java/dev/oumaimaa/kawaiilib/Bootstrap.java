@@ -13,7 +13,6 @@ import dev.oumaimaa.kawaiilib.managers.update.UpdateChecker;
 import dev.oumaimaa.kawaiilib.utils.CooldownManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +38,7 @@ public final class Bootstrap extends JavaPlugin {
     private TaskManager taskManager;
     private UpdateChecker updateChecker;
     private CooldownManager cooldownManager;
-    private Metrics metrics;
+    private org.bstats.bukkit.Metrics metrics;
 
     @Override
     public void onEnable() {
@@ -110,10 +109,10 @@ public final class Bootstrap extends JavaPlugin {
         languageManager.loadLanguages(reflections);
         taskManager.scheduleTasks(reflections);
 
-        // Initialize metrics if configured
-        Metrics metricsAnn = mainClass.getAnnotation(Metrics.class);
+        // Initialize metrics if configured - FIXED: Use correct annotation
+        dev.oumaimaa.kawaiilib.annotations.Metrics metricsAnn = mainClass.getAnnotation(dev.oumaimaa.kawaiilib.annotations.Metrics.class);
         if (metricsAnn != null) {
-            metrics = new Metrics(this, metricsAnn.id());
+            metrics = new org.bstats.bukkit.Metrics(this, metricsAnn.id());
             getLogger().info("Metrics enabled with ID: " + metricsAnn.id());
         }
 

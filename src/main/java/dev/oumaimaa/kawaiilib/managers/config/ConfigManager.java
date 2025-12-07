@@ -99,8 +99,11 @@ public final class ConfigManager {
     public void reloadConfig(String fileName) {
         ConfigWrapper wrapper = configs.get(fileName);
         if (wrapper != null) {
-            wrapper.yaml = YamlConfiguration.loadConfiguration(wrapper.file);
-            loadFieldsFromConfig(wrapper.clazz, wrapper.yaml);
+            YamlConfiguration newYaml = YamlConfiguration.loadConfiguration(wrapper.file);
+            // FIXED: Create new wrapper instead of modifying final field
+            ConfigWrapper newWrapper = new ConfigWrapper(wrapper.clazz, newYaml, wrapper.file, wrapper.annotation);
+            configs.put(fileName, newWrapper);
+            loadFieldsFromConfig(wrapper.clazz, newYaml);
             plugin.getLogger().info("Reloaded config: " + fileName);
         }
     }
@@ -118,10 +121,18 @@ public final class ConfigManager {
         });
     }
 
-    private record ConfigWrapper(
-            Class<?> clazz,
-            YamlConfiguration yaml,
-            File file,
-            Config annotation
-    ) {}
+    // FIXED: Removed 'yaml' from record to make it mutable through wrapper replacement
+    private static class ConfigWrapper {
+        final Class<?> clazz;
+        final YamlConfiguration yaml;
+        final File file;
+        final Config annotation;
+
+        ConfigWrapper(Class<?> clazz, YamlConfiguration yaml, File file, Config annotation) {
+            this.clazz = clazz;
+            this.yaml = yaml;
+            this.file = file;
+            this.annotation = annotation;
+        }
+    }
 }

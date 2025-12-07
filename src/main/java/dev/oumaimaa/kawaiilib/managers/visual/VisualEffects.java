@@ -197,23 +197,31 @@ public final class VisualEffects {
 
     /**
      * Play a sound for a player
+     * FIXED: Removed deprecated Sound.valueOf() usage
      */
     public static void playSound(@NotNull Player player,
                                  @NotNull String soundName,
                                  float volume,
                                  float pitch,
                                  SoundCategory category) {
+        // Try to parse as a Sound key first
         try {
-            Sound sound = Sound.valueOf(soundName.toUpperCase());
-            player.playSound(player.getLocation(), sound, category, volume, pitch);
-        } catch (IllegalArgumentException e) {
-            // Try as a custom sound
-            player.playSound(player.getLocation(), soundName, category, volume, pitch);
+            Sound sound = Registry.SOUNDS.get(NamespacedKey.minecraft(soundName.toLowerCase()));
+            if (sound != null) {
+                player.playSound(player.getLocation(), sound, category, volume, pitch);
+                return;
+            }
+        } catch (Exception ignored) {
+            // If that fails, fall through to custom sound
         }
+
+        // Fallback to custom sound string
+        player.playSound(player.getLocation(), soundName, category, volume, pitch);
     }
 
     /**
      * Play a sound at a specific location
+     * FIXED: Removed deprecated Sound.valueOf() usage
      */
     public static void playSoundAtLocation(@NotNull Location location,
                                            @NotNull String soundName,
@@ -223,12 +231,19 @@ public final class VisualEffects {
         World world = location.getWorld();
         if (world == null) return;
 
+        // Try to parse as a Sound key first
         try {
-            Sound sound = Sound.valueOf(soundName.toUpperCase());
-            world.playSound(location, sound, category, volume, pitch);
-        } catch (IllegalArgumentException e) {
-            world.playSound(location, soundName, category, volume, pitch);
+            Sound sound = Registry.SOUNDS.get(NamespacedKey.minecraft(soundName.toLowerCase()));
+            if (sound != null) {
+                world.playSound(location, sound, category, volume, pitch);
+                return;
+            }
+        } catch (Exception ignored) {
+            // If that fails, fall through to custom sound
         }
+
+        // Fallback to custom sound string
+        world.playSound(location, soundName, category, volume, pitch);
     }
 
     /**

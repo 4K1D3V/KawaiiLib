@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Method;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -116,15 +117,18 @@ public final class CommandManager {
                 return true;
             }
 
-            // Check cooldown
+            // Check cooldown - FIXED: Pass cooldown duration and get proper remaining time
             if (sender instanceof Player player && wrapper.cooldown != null) {
-                if (plugin.getCooldownManager().isOnCooldown(player.getUniqueId(), wrapper.cooldown.seconds())) {
-                    long remaining = plugin.getCooldownManager().getRemaining(player.getUniqueId());
+                String cooldownKey = commandName;
+                long cooldownSeconds = wrapper.cooldown.seconds();
+
+                if (plugin.getCooldownManager().isOnCooldown(cooldownKey, player.getUniqueId(), Duration.ofSeconds(cooldownSeconds))) {
+                    long remaining = plugin.getCooldownManager().getRemaining(cooldownKey, player.getUniqueId(), cooldownSeconds);
                     String message = wrapper.cooldown.message().replace("%time%", String.valueOf(remaining));
                     sender.sendMessage(plugin.formatText("<red>" + message));
                     return true;
                 }
-                plugin.getCooldownManager().setCooldown(player.getUniqueId(), wrapper.cooldown.seconds());
+                plugin.getCooldownManager().setCooldown(cooldownKey, player.getUniqueId());
             }
 
             // Handle subcommands

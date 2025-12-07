@@ -49,15 +49,17 @@ public final class CooldownManager {
 
     /**
      * Get remaining cooldown time in seconds
+     * FIXED: Changed logic to return time remaining, not elapsed
      */
     public long getRemaining(UUID uuid) {
-        return getRemaining("default", uuid);
+        return getRemaining("default", uuid, 0);
     }
 
     /**
      * Get remaining cooldown time for a named action
+     * FIXED: Added duration parameter and corrected calculation
      */
-    public long getRemaining(String key, UUID uuid) {
+    public long getRemaining(String key, UUID uuid, long durationSeconds) {
         Map<UUID, Instant> keyCooldowns = cooldowns.get(key);
         if (keyCooldowns == null) {
             return 0;
@@ -69,7 +71,8 @@ public final class CooldownManager {
         }
 
         long elapsed = Duration.between(lastUse, Instant.now()).toSeconds();
-        return Math.max(0, elapsed);
+        long remaining = durationSeconds - elapsed;
+        return Math.max(0, remaining);
     }
 
     /**
