@@ -1,0 +1,15 @@
+# JitPack configuration
+jdk:
+  - openjdk21
+
+# Before install script (optional)
+before_install:
+  - echo "Building KawaiiLib..."
+
+# Install command (optional, defaults to mvn install)
+install:
+  - mvn clean install -DskipTests
+
+# Environment variables (optional)
+env:
+  MAVEN_OPTS: "-Xmx2048m"
