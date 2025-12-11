@@ -17,7 +17,8 @@
 <dependency>
   <groupId>com.github.KawaiiDevelopmentMC</groupId>
   <artifactId>KawaiiLib</artifactId>
-  <version>-SNAPSHOT</version>
+  <version>1.0</version>
+  <scope>provided</scope>
 </dependency>
 ```
 
