@@ -15,9 +15,10 @@
 
 ```
 <dependency>
-  <groupId>com.github.KawaiiDevelopmentMC</groupId>
-  <artifactId>KawaiiLib</artifactId>
-  <version>-SNAPSHOT</version>
+	<groupId>com.github.KawaiiDevelopmentMC</groupId>
+	<artifactId>KawaiiLib</artifactId>
+	<version>1.0</version>
+	<scope>provided</scope>
 </dependency>
 ```
 
@@ -33,6 +34,6 @@
 
 ```
 dependencies {
-	        implementation 'com.github.KawaiiDevelopmentMC:KawaiiLib:-SNAPSHOT'
+	        implementation 'com.github.KawaiiDevelopmentMC:KawaiiLib:1.0'
 	}
 ```
