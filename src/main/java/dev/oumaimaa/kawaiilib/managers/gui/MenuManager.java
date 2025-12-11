@@ -217,17 +217,20 @@ public final class MenuManager implements Listener {
             Menu annotation,
             Map<Integer, ButtonWrapper> buttons,
             Method closeMethod
-    ) {}
+    ) {
+    }
 
     private record ButtonWrapper(
             Method method,
             Button annotation,
             Object instance
-    ) {}
+    ) {
+    }
 
     private record MenuSession(
             Class<?> menuClass,
             Inventory inventory,
             MenuWrapper wrapper
-    ) {}
+    ) {
+    }
 }

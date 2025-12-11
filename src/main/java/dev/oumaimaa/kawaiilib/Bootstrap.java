@@ -1,6 +1,9 @@
 package dev.oumaimaa.kawaiilib;
 
-import dev.oumaimaa.kawaiilib.annotations.*;
+import dev.oumaimaa.kawaiilib.annotations.AutoUpdate;
+import dev.oumaimaa.kawaiilib.annotations.Database;
+import dev.oumaimaa.kawaiilib.annotations.DiscordBot;
+import dev.oumaimaa.kawaiilib.annotations.KawaiiPlugin;
 import dev.oumaimaa.kawaiilib.managers.command.CommandManager;
 import dev.oumaimaa.kawaiilib.managers.config.ConfigManager;
 import dev.oumaimaa.kawaiilib.managers.database.DatabaseManager;
@@ -26,8 +29,8 @@ import java.util.logging.Level;
 public final class Bootstrap extends JavaPlugin {
 
     private static Bootstrap instance;
-    private Class<?> mainClass;
     private final MiniMessage miniMessage = MiniMessage.miniMessage();
+    private Class<?> mainClass;
     private CommandManager commandManager;
     private EventManager eventManager;
     private MenuManager menuManager;
@@ -39,6 +42,10 @@ public final class Bootstrap extends JavaPlugin {
     private UpdateChecker updateChecker;
     private CooldownManager cooldownManager;
     private org.bstats.bukkit.Metrics metrics;
+
+    public static Bootstrap getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
@@ -146,10 +153,6 @@ public final class Bootstrap extends JavaPlugin {
         }
 
         getLogger().info("KawaiiLib disabled successfully!");
-    }
-
-    public static Bootstrap getInstance() {
-        return instance;
     }
 
     public Class<?> getMainClass() {

@@ -10,7 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
 import java.io.File;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class LanguageManager {

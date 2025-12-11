@@ -204,7 +204,9 @@ public final class CommandManager {
         return mainClass;
     }
 
-    private record CommandWrapper(Method method, Command annotation, Cooldown cooldown, Object instance) {}
+    private record CommandWrapper(Method method, Command annotation, Cooldown cooldown, Object instance) {
+    }
 
-    private record SubcommandWrapper(Method method, String name, Object instance) {}
+    private record SubcommandWrapper(Method method, String name, Object instance) {
+    }
 }

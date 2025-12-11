@@ -22,7 +22,7 @@ public final class DiscordManager extends ListenerAdapter {
     private final Bootstrap plugin;
     private final JDA jda;
     private final Map<String, Method> commandMethods = new ConcurrentHashMap<>();
-    private Object mainInstance;
+    private final Object mainInstance;
 
     public DiscordManager(Bootstrap plugin, @NotNull DiscordBot config) {
         this.plugin = plugin;
