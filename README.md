@@ -15,10 +15,10 @@
 
 ```
 <dependency>
-	    <groupId>com.github.KawaiiDevelopmentMC</groupId>
-	    <artifactId>KawaiiLib</artifactId>
-	    <version>-SNAPSHOT</version>
-	</dependency>
+  <groupId>com.github.KawaiiDevelopmentMC</groupId>
+  <artifactId>KawaiiLib</artifactId>
+  <version>-SNAPSHOT</version>
+</dependency>
 ```
 
 ```
